@@ -5,6 +5,7 @@ import Colors from "@constants/colors";
 
 interface IStyledPhoto extends IPhoto {
   basePath: string;
+  pointer: boolean;
 }
 
 export const StyledPhotoContainer = styled.div`
@@ -27,6 +28,7 @@ export const StyledPhoto = styled.div`
   background-image: url("${(p: IStyledPhoto) => p.basePath}/assets/photos/photo-${(p: IStyledPhoto) => p.id}.jpeg");
   background-size: cover;
   background-repeat: no-repeat;
+  cursor: ${(p: IStyledPhoto) => p.pointer && 'pointer'};
 `;
 
 export const PhotoInfo = styled.div`

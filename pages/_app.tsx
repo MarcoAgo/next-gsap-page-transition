@@ -45,7 +45,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <Wrapper>
       <Header />
       <Component {...pageProps} />
-      <Switch>
+      <Switch className="view-switch">
         <LinkItem
           activeItem={activeView === Views.COMPACTED}
           disabled={activeView === Views.COMPACTED}

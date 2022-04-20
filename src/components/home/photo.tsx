@@ -1,16 +1,24 @@
-import React, {useEffect} from "react";
+import React, {Ref, useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {PhotoInfo, StyledPhoto, StyledPhotoContainer, StyledInfoContainer} from "@components/home/styled-photo";
 import {useRouter} from "next/router";
-import {ISimplePhoto} from "@app/pages";
+import {ISimplePhoto, photos} from "@app/pages";
 import gsap from "gsap";
+import Routes from "@constants/Routes";
+import Views from "@constants/Views";
+import {router} from "next/client";
 
 export interface IPhoto extends ISimplePhoto {
   index: number;
+  wrapperWidth?: number;
+  wrapperScrollValue?: number;
 }
 
 const Photo: React.FC<IPhoto> = (props): JSX.Element => {
-  const { index, id, title, author } = props;
-  const { basePath } = useRouter();
+  const { index, id, title, author, wrapperWidth, wrapperScrollValue } = props;
+  const { basePath, pathname, push } = useRouter();
+  const photoRef = useRef<any>(null);
+  const [width, setWidth] = useState<number | undefined>(undefined);
+  const isProjectsView = pathname === Routes[Views.EXTENDED];
 
   useEffect(() => {
     gsap.set(`.photo-${id}`, {
@@ -24,6 +32,53 @@ const Photo: React.FC<IPhoto> = (props): JSX.Element => {
     })
   }, [id, index])
 
+  useEffect(() => {
+    if (photoRef.current) {
+      setWidth(photoRef.current.offsetWidth);
+    }
+  }, [photoRef])
+
+  const handlePhotoClick = useCallback(() => {
+    gsap.to('.anim-info', {
+      opacity: 0,
+      duration: 0.4,
+    });
+
+    gsap.to('.view-switch', {
+      opacity: 0,
+      duration: 0.4,
+    });
+
+    gsap.to(`.project-info-wrapper-${id}`, {
+      left: 0,
+      duration: 0.8,
+    })
+
+    if (wrapperWidth && width) {
+      photos.forEach((p: ISimplePhoto, i) => {
+        if (p.id !== id) {
+          const { left, right } = document.querySelector(`.photo-${p.id}`)?.getBoundingClientRect() || {};
+          if (left && right) {
+            gsap.to(`.photo-${p.id}`, {
+              x: i > index ? wrapperWidth + right : left - wrapperWidth,
+              duration: 1.5,
+            })
+          }
+        }
+      })
+
+      gsap.to(`.photo-${id}`, {
+        position: 'relative',
+        top: '50vh',
+        x: wrapperScrollValue ? Math.round(wrapperWidth - (width + 208)) + wrapperScrollValue : Math.round(wrapperWidth - (width + 208)),
+        scale: 2,
+        duration: 0.8,
+      }).then(() => {
+        push(`/projects/${id}`, undefined, { shallow: true }).then()
+      })
+    }
+  }, [id, width, wrapperWidth, wrapperScrollValue, index, push])
+
   return (
     <>
       <StyledPhotoContainer className="photo-container" index={index}>
@@ -32,6 +87,9 @@ const Photo: React.FC<IPhoto> = (props): JSX.Element => {
           key={id}
           basePath={basePath}
           className={`photo-${id} anim-photo-enter`}
+          pointer={isProjectsView}
+          onClick={isProjectsView && handlePhotoClick}
+          ref={photoRef}
         />
       </StyledPhotoContainer>
       <StyledInfoContainer>

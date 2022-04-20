@@ -14,4 +14,5 @@ export const ProjectsWrapper = styled.div`
 
 export const ProjectsSlider = styled.div`
   width: 100vw;
+  height: 100vh;
 `;
