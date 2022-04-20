@@ -10,6 +10,7 @@ export const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 124px;
+  overflow: hidden;
 `;
 
 export const Title = styled.h4`

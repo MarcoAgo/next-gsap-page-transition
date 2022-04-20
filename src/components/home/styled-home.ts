@@ -6,13 +6,13 @@ export const HomeWrapper = styled.div`
   position: relative;
   width: 100vw;
   height: calc(100vh - 106px);
+  overflow: hidden;
 `;
 
 export const Container = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  padding: 0 124px;
 `;
 
 export const LeftContent = styled.div`
@@ -22,6 +22,7 @@ export const LeftContent = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
+  padding-left: 124px;
 
   h1 {
     font-family: ${Fonts.PLAYFAIR_DISPLAY};

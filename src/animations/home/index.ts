@@ -1,4 +1,4 @@
-import gsap, {Expo} from "gsap";
+import gsap from "gsap";
 
 export const mountAnim = () => {
   gsap.from('.homeLeftContent', {
@@ -6,8 +6,13 @@ export const mountAnim = () => {
     duration: 0.8,
   })
 
-  gsap.from('.homeRightContent', {
-    x: -790,
+  gsap.from('.anim-info', {
+    y: '-15vh',
+    duration: 0.8,
+  })
+
+  gsap.from('.photo-container', {
+    x: '-50vw',
     duration: 0.8,
   })
 
@@ -24,8 +29,8 @@ export const unmountAnim = (callback: () => void) => {
     duration: 0.8,
   })
 
-  gsap.to('.homeRightContent', {
-    x: -805,
+  gsap.to('.photo-container', {
+    x: '-50vw',
     duration: 0.8,
   })
 
@@ -34,13 +39,11 @@ export const unmountAnim = (callback: () => void) => {
     // y: -100,
     scale: 0.8,
     duration: 0.8,
-  }).then(() => callback())
+  })
 
   gsap.to('.anim-info', {
-    // x: i => i === 0 ? 0 : `${23.5 * i}vw` as any,
-    y: 0,
-    scale: 0.8,
+    y: '-15vh',
     duration: 0.8,
-  }).then(() => callback())
+  }).then(callback)
 }
 

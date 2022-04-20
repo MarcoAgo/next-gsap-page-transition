@@ -1,5 +1,5 @@
-import React, {useEffect, useMemo} from "react";
-import {PhotoInfo, StyledPhoto, StyledPhotoContainer} from "@components/home/styled-photo";
+import React, {useEffect} from "react";
+import {PhotoInfo, StyledPhoto, StyledPhotoContainer, StyledInfoContainer} from "@components/home/styled-photo";
 import {useRouter} from "next/router";
 import {ISimplePhoto} from "@app/pages";
 import gsap from "gsap";
@@ -10,8 +10,7 @@ export interface IPhoto extends ISimplePhoto {
 
 const Photo: React.FC<IPhoto> = (props): JSX.Element => {
   const { index, id, title, author } = props;
-  const { basePath, pathname } = useRouter();
-  const isHome = useMemo(() => pathname === '/', [pathname]);
+  const { basePath } = useRouter();
 
   useEffect(() => {
     gsap.set(`.photo-${id}`, {
@@ -21,25 +20,27 @@ const Photo: React.FC<IPhoto> = (props): JSX.Element => {
 
     gsap.set(`.info-${id}`, {
       x: index === 0 ? index : `${23.5 * index}vw` as any,
-      y: 500,
+      y: 100,
     })
   }, [id, index])
 
   return (
-    <StyledPhotoContainer>
-      <StyledPhoto
-        {...props}
-        key={id}
-        basePath={basePath}
-        className={`photo-${id} anim-photo-enter`}
-      />
-      {!isHome && (
+    <>
+      <StyledPhotoContainer className="photo-container" index={index}>
+        <StyledPhoto
+          {...props}
+          key={id}
+          basePath={basePath}
+          className={`photo-${id} anim-photo-enter`}
+        />
+      </StyledPhotoContainer>
+      <StyledInfoContainer>
         <PhotoInfo className={`info-${id} anim-info`}>
           <h2>{title}</h2>
           <p>{author}</p>
         </PhotoInfo>
-      )}
-    </StyledPhotoContainer>
+      </StyledInfoContainer>
+    </>
   )
 }
 

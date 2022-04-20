@@ -2,7 +2,7 @@ import '../styles/globals.css'
 import type {AppProps} from 'next/app'
 import Header from "../src/components/shared/header/header";
 import styled from "styled-components";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {LinkItem, Switch} from "@components/home/styled-home";
 import Views from "@constants/Views";
 import IconObject from "@components/shared/icon/IconObject";
@@ -34,6 +34,12 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     setActiveView(view);
   }
+
+  useEffect(() => {
+    if (router.pathname === Routes[Views.EXTENDED]) {
+      setActiveView(Views.EXTENDED);
+    }
+  }, [router.pathname]);
 
   return (
     <Wrapper>

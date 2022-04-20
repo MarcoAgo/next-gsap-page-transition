@@ -9,7 +9,14 @@ interface IStyledPhoto extends IPhoto {
 
 export const StyledPhotoContainer = styled.div`
   position: absolute;
+  z-index: ${(p: IStyledPhoto) => p.index === 0 ? 9000 : 5 - p.index};
+  left: 50vw;
   top: 5vh;
+`;
+
+export const StyledInfoContainer = styled.div`
+  position: absolute;
+  bottom: 0;
 `;
 
 export const StyledPhoto = styled.div`
@@ -24,6 +31,7 @@ export const StyledPhoto = styled.div`
 
 export const PhotoInfo = styled.div`
   text-align: center;
+  width: 25vw;
   
   h2 {
     font-size: 24px;
