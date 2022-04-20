@@ -8,7 +8,7 @@ export interface IPhotoInfo {
   author: string;
   paragraph: string;
   title: string;
-  handleBackButton: () => void;
+  handleBackButton?: () => void;
 }
 
 const ProjectInfo: React.FC<IPhotoInfo> = (props) => {

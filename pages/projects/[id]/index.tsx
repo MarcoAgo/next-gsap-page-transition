@@ -5,7 +5,6 @@ import {useRouter} from "next/router";
 import {ISimplePhoto, photos} from "@app/pages";
 import {StyledPhoto} from "@components/home/styled-photo";
 import gsap from "gsap";
-import photo from "@components/home/photo";
 
 const Project: React.FC = () => {
   const { query, push } = useRouter();
