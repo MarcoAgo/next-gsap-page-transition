@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { IPhoto } from "@components/home/photo";
 import Fonts from "@constants/fonts";
 import Colors from "@constants/colors";
+import Image from "next/image";
 
 interface IStyledPhoto extends IPhoto {
-  basePath: string;
   pointer: boolean;
 }
 
@@ -12,7 +12,7 @@ export const StyledPhotoContainer = styled.div`
   position: absolute;
   z-index: ${(p: IStyledPhoto) => p.index === 0 ? 9000 : 5 - p.index};
   left: 50vw;
-  top: 5vh;
+  top: 0;
 `;
 
 export const StyledInfoContainer = styled.div`
@@ -20,14 +20,9 @@ export const StyledInfoContainer = styled.div`
   bottom: 0;
 `;
 
-export const StyledPhoto = styled.div`
+export const StyledPhoto = styled(Image)`
   z-index: ${(p: IStyledPhoto) => p.index === 0 ? 9000 : 5 - p.index};
-  width: 25vw;
-  height: 65vh;
   border-radius: 260px;
-  background-image: url("${(p: IStyledPhoto) => p.basePath}/assets/photos/photo-${(p: IStyledPhoto) => p.id}.jpeg");
-  background-size: cover;
-  background-repeat: no-repeat;
   cursor: ${(p: IStyledPhoto) => p.pointer && 'pointer'};
 `;
 

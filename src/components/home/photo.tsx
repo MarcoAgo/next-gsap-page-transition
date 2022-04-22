@@ -1,11 +1,10 @@
-import React, {Ref, useCallback, useEffect, useMemo, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {PhotoInfo, StyledPhoto, StyledPhotoContainer, StyledInfoContainer} from "@components/home/styled-photo";
 import {useRouter} from "next/router";
 import {ISimplePhoto, photos} from "@app/pages";
 import gsap from "gsap";
 import Routes from "@constants/Routes";
 import Views from "@constants/Views";
-import {router} from "next/client";
 
 export interface IPhoto extends ISimplePhoto {
   index: number;
@@ -38,7 +37,7 @@ const Photo: React.FC<IPhoto> = (props): JSX.Element => {
     }
   }, [photoRef])
 
-  const handlePhotoClick = useCallback(() => {
+  const handlePhotoClick = () => {
     gsap.to('.anim-info', {
       opacity: 0,
       duration: 0.4,
@@ -77,20 +76,20 @@ const Photo: React.FC<IPhoto> = (props): JSX.Element => {
         push(`/projects/${id}`, undefined, { shallow: true }).then()
       })
     }
-  }, [id, width, wrapperWidth, wrapperScrollValue, index, push])
+  };
 
   return (
     <>
       <StyledPhotoContainer className="photo-container" index={index}>
-        <StyledPhoto
-          {...props}
-          key={id}
-          basePath={basePath}
-          className={`photo-${id} anim-photo-enter`}
-          pointer={isProjectsView}
-          onClick={isProjectsView && handlePhotoClick}
-          ref={photoRef}
-        />
+        <div className={`photo-${id} anim-photo-enter`} ref={photoRef} key={id}>
+          <StyledPhoto
+            src={`${basePath}/assets/photos/photo-${id}.jpeg`}
+            width={450}
+            height={650}
+            pointer={isProjectsView}
+            onClick={isProjectsView && handlePhotoClick}
+          />
+        </div>
       </StyledPhotoContainer>
       <StyledInfoContainer>
         <PhotoInfo className={`info-${id} anim-info`}>

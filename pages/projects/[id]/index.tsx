@@ -7,7 +7,7 @@ import {StyledPhoto} from "@components/home/styled-photo";
 import gsap from "gsap";
 
 const Project: React.FC = () => {
-  const { query, push } = useRouter();
+  const { query, push, basePath } = useRouter();
   const wrapperRef = useRef(null) as any;
   const photoRef = useRef(null) as any;
   const project = useMemo(() => {
@@ -77,8 +77,13 @@ const Project: React.FC = () => {
   return (
     <ProjectWrapper ref={wrapperRef}>
       <ProjectInfo {...project} handleBackButton={handleBackButton} />
-      <div>
-        <StyledPhoto className={`project-info-styled-photo-${query.id}`} id={query.id} ref={photoRef} />
+      <div ref={photoRef} className={`project-info-styled-photo-${query.id}`}>
+        <StyledPhoto
+          src={`${basePath}/assets/photos/photo-${query.id}.jpeg`}
+          id={query.id}
+          width={450}
+          height={650}
+        />
       </div>
     </ProjectWrapper>
   )
